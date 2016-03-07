@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "parse_midi.js",
+  "sourceRoot": "",
+  "sources": [
+    "parse_midi.coffee"
+  ],
+  "names": [],
+  "mappings": ";AACA;AAAA,MAAA;;EAAA,GAAA,GACE;IAAA,IAAA,EAAM,GAAN;IACA,IAAA,EAAM,GADN;IAEA,IAAA,EAAM,GAFN;;;AAIF,OAAA,UAAA;;IACE,OAAO,CAAC,GAAR,CAAY,KAAZ;AADF;AALA"
+}
