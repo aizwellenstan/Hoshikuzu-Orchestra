@@ -6,7 +6,6 @@
  applyChannelToLayer の中身を変更
 
 */
-
 // MIDIの読み込みとファンクションの設定
 function MidiFile(filePath)
 {
@@ -993,9 +992,9 @@ function alertObj(o,title)
     var ConsecutiveNum = 0;
     for(var i = 0; i < channel.notes.length; i++)
     {
-      // 読み込み制限
-      if(noteNum > 400){
-        continue
+      // 一つのコンポにレイヤーがありすぎると停止するので、一定数回したら別コンポに分ける
+      if(noteNum%400 == 399){
+        myComp = app.project.items.addComp("_putLettersbyMIDI "+noteNum+"~", 1920, 1080, 1.00, 600, 29.97)
       }
       notesSoFar++;
       if(pb)
@@ -1028,8 +1027,8 @@ function alertObj(o,title)
 
         // 追記 : midiノートの変更時にレイヤーを追加
 
-        $.writeln("noteNum");
-        $.writeln(noteNum);
+        // $.writeln("noteNum");
+        // $.writeln(noteNum);
         var target = myComp.layers.add(app.project.activeItem)
         target.startTime = t;
         target("position").setValue([0+pitch*50,vel*-7]);
@@ -1085,8 +1084,8 @@ function alertObj(o,title)
             return;
 
         // var myComp = app.project.activeItem;
-        var myComp = app.project.items.addComp("putLettersbyMIDI", 1920, 1080, 1.00, 600, 29.97)
-        app.beginUndoGroup("putLettersbyMIDI");
+        var myComp = app.project.items.addComp("_putLettersbyMIDI 0~", 1920, 1080, 1.00, 600, 29.97)
+        app.beginUndoGroup("_putLettersbyMIDI");
         //    var midi = new MidiFile("/Users/poly/Sites/src/adobe_scripts/in_progress/moreNotes.mid");
         var pb = progressBar("loading " + result.midiFileName);
         pb.setValue(0.6);
@@ -1113,7 +1112,11 @@ function alertObj(o,title)
 
 
 
-  go(this);
+    if ((app.project.activeItem == null) || !(app.project.activeItem instanceof CompItem)) {
+        alert("コンポジションを選択した状態で実行しよう");
+    }else{
+        go(this);
+    }
 
 }
 
